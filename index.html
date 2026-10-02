@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Polo Propio | Arma tu pedido</title>
+  
+  <!-- Tipografía urbana y moderna de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       VARIABLES DE COLOR Y ESTILO URBANO
+       ============================================================ */
+    :root {
+      --bg-main: #0D0D0D;
+      --bg-card: #161616;
+      --bg-card-hover: #1C1C1C;
+      --bg-input: #101010;
+      --border-color: #262626;
+      --border-focus: #FF6A00;
+      --accent-orange: #FF6A00;
+      --accent-orange-hover: #E55F00;
+      --accent-orange-glow: rgba(255, 106, 0, 0.25);
+      --accent-green-wa: #25D366;
+      --accent-green-wa-hover: #20BD5A;
+      --text-white: #FFFFFF;
+      --text-muted: #8E8E93;
+      --text-dim: #545458;
+      --danger: #FF453A;
+      --danger-bg: rgba(255, 69, 58, 0.15);
+      --success: #32D74B;
+      --success-bg: rgba(50, 215, 75, 0.12);
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+      
+      --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-heading: 'Bebas Neue', sans-serif;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ============================================================
+       RESET Y BASE
+       ============================================================ */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-white);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 16px 12px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 106, 0, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(255, 106, 0, 0.05) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ============================================================
+       ENCABEZADO
+       ============================================================ */
+    .header {
+      text-align: center;
+      padding: 12px 8px 6px;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 106, 0, 0.12);
+      border: 1px solid rgba(255, 106, 0, 0.35);
+      color: var(--accent-orange);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 10px;
+    }
+
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 2.8rem;
+      letter-spacing: 1.5px;
+      line-height: 1;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #FFFFFF 30%, #D4D4D8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+
+    .brand-title span {
+      background: linear-gradient(180deg, #FF8833 0%, #FF6A00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 500;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    /* ============================================================
+       TARJETAS Y SECCIONES
+       ============================================================ */
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 22px 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-step {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #FF6A00, #E05300);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px var(--accent-orange-glow);
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-white);
+      letter-spacing: -0.2px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      margin-top: 1px;
+    }
+
+    /* ============================================================
+       FORMULARIOS Y CAMPOS DE TEXTO
+       ============================================================ */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-group.last {
+      margin-bottom: 0;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    label .req {
+      color: var(--accent-orange);
+      font-weight: bold;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--text-dim);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    input[type="text"],
+    input[type="tel"] {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-white);
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      font-weight: 600;
+      padding: 13px 14px 13px 44px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    input[type="text"]::placeholder,
+    input[type="tel"]::placeholder {
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px var(--accent-orange-glow);
+    }
+
+    input:focus + .input-icon,
+    .input-wrapper:focus-within .input-icon {
+      color: var(--accent-orange);
+    }
+
+    /* ============================================================
+       SECCIÓN 1: SELECTOR DE COLOR Y POLO SVG
+       ============================================================ */
+    .color-section-grid {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 16px;
+      align-items: center;
+    }
+
+    @media (max-width: 520px) {
+      .color-section-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .color-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .color-chip {
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .color-chip:hover {
+      border-color: #404040;
+      background: var(--bg-card-hover);
+      transform: translateY(-1px);
+    }
+
+    .color-chip.active {
+      border-color: var(--accent-orange);
+      background: rgba(255, 106, 0, 0.08);
+      box-shadow: 0 0 0 2px var(--accent-orange-glow);
+    }
+
+    .color-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .color-chip.active .color-circle {
+      transform: scale(1.15);
+    }
+
+    .color-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .color-chip.active .color-label {
+      color: var(--text-white);
+      font-weight: 700;
+    }
+
+    /* Contenedor del Polo SVG */
+    .polo-preview-box {
+      background: linear-gradient(145deg, #121212, #181818);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .polo-svg-container {
+      width: 100px;
+      height: 105px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6));
+    }
+
+    .polo-svg {
+      width: 100%;
+      height: 100%;
+      transition: fill 0.35s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.35s ease;
+    }
+
+    .polo-color-name {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* ============================================================
+       SECCIÓN 2: AGREGAR PERSONAS
+       ============================================================ */
+    .size-selector-group {
+      margin-bottom: 16px;
+    }
+
+    .size-pills {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .size-pill {
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 11px 0;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .size-pill:hover {
+      border-color: #404040;
+      color: var(--text-white);
+    }
+
+    .size-pill.active {
+      background: var(--accent-orange);
+      border-color: var(--accent-orange);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px var(--accent-orange-glow);
+      transform: translateY(-1px);
+    }
+
+    .btn-add {
+      width: 100%;
+      background: #202020;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-white);
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      font-weight: 700;
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-add:hover {
+      background: #282828;
+      border-color: var(--accent-orange);
+      color: var(--accent-orange);
+      transform: translateY(-1px);
+    }
+
+    .btn-add:active {
+      transform: translateY(0);
+    }
+
+    .btn-add svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-add:hover svg {
+      transform: rotate(90deg);
+    }
+
+    /* Mensajes de feedback / errores */
+    .alert-banner {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: var(--danger-bg);
+      border: 1px solid var(--danger);
+      color: #FF857F;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      margin-top: 12px;
+      animation: shake 0.3s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    /* Lista de personas añadidas */
+    .people-list-container {
+      margin-top: 20px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+
+    .people-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .people-count-badge {
+      background: rgba(255, 106, 0, 0.15);
+      color: var(--accent-orange);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .people-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    /* Scrollbar estilizado */
+    .people-list::-webkit-scrollbar {
+      width: 5px;
+    }
+    .people-list::-webkit-scrollbar-track {
+      background: var(--bg-input);
+      border-radius: 10px;
+    }
+    .people-list::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 10px;
+    }
+    .people-list::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-orange);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 28px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1.5px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-dim);
+      font-size: 0.88rem;
+    }
+
+    .empty-state svg {
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+
+    .person-item {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: var(--transition);
+      animation: fadeInSlide 0.25s ease-out forwards;
+    }
+
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .person-item.removing {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.2s ease;
+    }
+
+    .person-item:hover {
+      border-color: #383838;
+      background: #171717;
+    }
+
+    .person-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .person-num {
+      width: 26px;
+      height: 26px;
+      background: #222222;
+      border-radius: 50%;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .person-details {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .person-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .person-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .dorsal-tag {
+      background: rgba(255, 106, 0, 0.12);
+      color: #FFA35C;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+    }
+
+    .person-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .talla-badge {
+      background: #252525;
+      color: #FFFFFF;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #383838;
+    }
+
+    .btn-delete {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .btn-delete:hover {
+      color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    /* ============================================================
+       SECCIÓN 3: RESUMEN Y TOTAL EN VIVO
+       ============================================================ */
+    .summary-card {
+      background: linear-gradient(180deg, #171717 0%, #121212 100%);
+      border: 1.5px solid #2B2B2B;
+    }
+
+    /* Desglose por tallas */
+    .sizes-breakdown-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .size-count-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 8px 6px;
+      text-align: center;
+    }
+
+    .size-count-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .size-count-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-top: 2px;
+    }
+
+    /* Banner motivacional de descuento */
+    .discount-banner {
+      background: rgba(255, 106, 0, 0.08);
+      border: 1.5px solid rgba(255, 106, 0, 0.25);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: var(--transition);
+    }
+
+    .discount-icon {
+      font-size: 1.4rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .discount-text-box {
+      flex: 1;
+    }
+
+    .discount-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #FFB37C;
+      line-height: 1.3;
+    }
+
+    .discount-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Barra de progreso de descuentos */
+    .discount-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #252525;
+      border-radius: 999px;
+      margin-top: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .discount-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FF8833, #FF6A00);
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Desglose de precios */
+    .pricing-table {
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .pricing-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-row.discount-row {
+      color: #32D74B;
+      font-weight: 600;
+    }
+
+    .pricing-row.total-row {
+      border-top: 1.5px dashed var(--border-color);
+      padding-top: 14px;
+      margin-top: 4px;
+      color: var(--text-white);
+    }
+
+    .total-label {
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .total-amount {
+      font-family: var(--font-heading);
+      font-size: 2.3rem;
+      color: var(--accent-orange);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+
+    /* ============================================================
+       BOTÓN WHATSAPP Y CONFIRMACIÓN
+       ============================================================ */
+    .btn-whatsapp {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent-green-wa), #1EA952);
+      border: none;
+      border-radius: var(--radius-md);
+      color: #FFFFFF;
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.35);
+      transition: var(--transition);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-whatsapp:hover {
+      background: linear-gradient(135deg, #2ae06d, #20BD5A);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.45);
+    }
+
+    .btn-whatsapp:active {
+      transform: translateY(0);
+    }
+
+    .btn-whatsapp svg {
+      width: 24px;
+      height: 24px;
+      fill: #FFFFFF;
+    }
+
+    /* Modal / Toast de Confirmación */
+    .toast-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 20px;
+    }
+
+    .toast-modal {
+      background: #1A1A1A;
+      border: 1.5px solid var(--accent-orange);
+      border-radius: var(--radius-lg);
+      padding: 26px 22px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 30px var(--accent-orange-glow);
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .toast-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(37, 211, 102, 0.15);
+      border: 2px solid var(--accent-green-wa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: var(--accent-green-wa);
+    }
+
+    .toast-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .toast-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .btn-modal-close {
+      background: #2A2A2A;
+      border: none;
+      color: #FFFFFF;
+      padding: 11px 24px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-modal-close:hover {
+      background: #383838;
+    }
+
+    /* Footer sutil */
+    .footer-note {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.78rem;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- ENCABEZADO -->
+    <header class="header">
+      <div class="brand-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 10h2v4h-2zm0 6h2v2h-2z"/>
+        </svg>
+        Herramienta de pedidos grupales
+      </div>
+      <h1 class="brand-title">Polo Propio <span>Lima</span></h1>
+      <p class="brand-subtitle">Arma la lista de tu equipo o promo, calcula tu descuento al instante y envíanos el pedido directo a WhatsApp.</p>
+    </header>
+
+    <!-- ============================================================
+         SECCIÓN 1: DATOS DEL ORGANIZADOR Y COLOR
+         ============================================================ -->
+    <section class="card" id="seccion-organizador">
+      <div class="section-header">
+        <div class="section-step">1</div>
+        <div>
+          <h2 class="section-title">Datos del organizador y color</h2>
+          <p class="section-desc">¿A nombre de quién coordinamos y qué color lucirá el grupo?</p>
+        </div>
+      </div>
+
+      <!-- Datos del organizador -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="orgNombre">Nombre del organizador <span class="req">*</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </span>
+            <input type="text" id="orgNombre" placeholder="Ej. Carlos Mendoza" autocomplete="name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="orgCelular">Celular / WhatsApp <span class="req">*</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+              </svg>
+            </span>
+            <input type="tel" id="orgCelular" placeholder="Ej. 987 654 321" autocomplete="tel">
+          </div>
+        </div>
+      </div>
+
+      <!-- Selector de color + SVG del polo -->
+      <div class="form-group last" style="margin-top: 6px;">
+        <label>Color del polo <span class="req">*</span></label>
+        
+        <div class="color-section-grid">
+          <!-- 6 Opciones circulares de color con su nombre -->
+          <div class="color-options" id="colorOptionsContainer"></div>
+
+          <!-- Polo SVG interactivo con silueta y borde dinámico -->
+          <div class="polo-preview-box">
+            <div class="polo-svg-container">
+              <svg id="poloSvg" class="polo-svg" viewBox="0 0 100 100" fill="#141414" stroke="#777777" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+                <path id="poloPath" d="
+                  M 35 18 
+                  Q 42 25, 50 25 
+                  Q 58 25, 65 18 
+                  L 82 28 
+                  L 93 46 
+                  L 81 54 
+                  L 76 46 
+                  L 76 86 
+                  Q 76 88, 74 88 
+                  L 26 88 
+                  Q 24 88, 24 86 
+                  L 24 46 
+                  L 19 54 
+                  L 7 46 
+                  L 18 28 
+                  Z
+                "/>
+                <!-- Detalles de costura y cuello para realismo -->
+                <path d="M 35 18 Q 50 26, 65 18" fill="none" id="poloCollarInner" stroke="#555555" stroke-width="2" />
+                <path d="M 38 21 Q 50 30, 62 21" fill="none" id="poloCollarRib" stroke="#555555" stroke-width="1.2" opacity="0.7"/>
+                <line x1="18" y1="28" x2="24" y2="46" id="poloSleeveL" stroke="#555555" stroke-width="1.4" opacity="0.6"/>
+                <line x1="82" y1="28" x2="76" y2="46" id="poloSleeveR" stroke="#555555" stroke-width="1.4" opacity="0.6"/>
+              </svg>
+            </div>
+            <span class="polo-color-name" id="poloColorLabel">Negro</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 2: LISTA DE PERSONAS
+         ============================================================ -->
+    <section class="card" id="seccion-personas">
+      <div class="section-header">
+        <div class="section-step">2</div>
+        <div>
+          <h2 class="section-title">Lista de personas</h2>
+          <p class="section-desc">Indica el nombre a estampar, dorsal opcional y talla de cada uno.</p>
+        </div>
+      </div>
+
+      <!-- Formulario para agregar una persona -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="personaNombre">Nombre en el polo <span class="req">*</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </span>
+            <input type="text" id="personaNombre" placeholder="Ej. LUISITO o CAPITÁN" style="text-transform: uppercase;">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="personaNumero">Número / Dorsal <span style="color: var(--text-dim); font-size: 0.72rem;">(Opcional)</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="9" x2="20" y2="9"></line>
+                <line x1="4" y1="15" x2="20" y2="15"></line>
+                <line x1="10" y1="3" x2="8" y2="21"></line>
+                <line x1="16" y1="3" x2="14" y2="21"></line>
+              </svg>
+            </span>
+            <input type="text" id="personaNumero" placeholder="Ej. 10 o 07" maxlength="6">
+          </div>
+        </div>
+      </div>
+
+      <!-- Selector de Tallas con botones directos -->
+      <div class="size-selector-group">
+        <label>Talla del polo <span class="req">*</span></label>
+        <div class="size-pills" id="sizePillsContainer">
+          <div class="size-pill" data-size="S">S</div>
+          <div class="size-pill active" data-size="M">M</div>
+          <div class="size-pill" data-size="L">L</div>
+          <div class="size-pill" data-size="XL">XL</div>
+        </div>
+      </div>
+
+      <!-- Botón Agregar Persona -->
+      <button type="button" class="btn-add" id="btnAddPerson">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Agregar persona
+      </button>
+
+      <!-- Alerta visual de validación -->
+      <div class="alert-banner" id="personErrorAlert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="personErrorText">Error al agregar</span>
+      </div>
+
+      <!-- Lista dinámica de personas agregadas -->
+      <div class="people-list-container">
+        <div class="people-list-header">
+          <span style="font-size: 0.86rem; font-weight: 700; color: var(--text-white);">Integrantes del grupo</span>
+          <span class="people-count-badge" id="peopleCountBadge">0 personas</span>
+        </div>
+
+        <div class="people-list" id="peopleList">
+          <div class="empty-state" id="emptyStateMsg">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+            <p>Aún no has agregado integrantes.</p>
+            <p style="font-size: 0.78rem; margin-top: 4px; color: var(--text-dim);">Escribe el nombre arriba y presiona "Agregar persona".</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECCIÓN 3: RESUMEN Y TOTAL EN VIVO
+         ============================================================ -->
+    <section class="card summary-card" id="seccion-resumen">
+      <div class="section-header">
+        <div class="section-step">3</div>
+        <div>
+          <h2 class="section-title">Resumen y total</h2>
+          <p class="section-desc">Cálculo en vivo con descuentos por volumen y detalle final.</p>
+        </div>
+      </div>
+
+      <!-- Contador por tallas -->
+      <div class="sizes-breakdown-row">
+        <div class="size-count-card">
+          <div class="size-count-label">Talla S</div>
+          <div class="size-count-value" id="countS">0</div>
+        </div>
+        <div class="size-count-card">
+          <div class="size-count-label">Talla M</div>
+          <div class="size-count-value" id="countM">0</div>
+        </div>
+        <div class="size-count-card">
+          <div class="size-count-label">Talla L</div>
+          <div class="size-count-value" id="countL">0</div>
+        </div>
+        <div class="size-count-card">
+          <div class="size-count-label">Talla XL</div>
+          <div class="size-count-value" id="countXL">0</div>
+        </div>
+      </div>
+
+      <!-- Mensaje motivador interactivo de descuento -->
+      <div class="discount-banner" id="discountBanner">
+        <div class="discount-icon" id="discountIcon">🎯</div>
+        <div class="discount-text-box">
+          <div class="discount-title" id="discountTitle">Agrega polos para desbloquear descuentos</div>
+          <div class="discount-sub" id="discountSub">Desde 6 polos obtienes 10% y desde 12 polos 15% de descuento.</div>
+          <div class="discount-progress-bar">
+            <div class="discount-progress-fill" id="discountProgressBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla de totales en soles -->
+      <div class="pricing-table">
+        <div class="pricing-row">
+          <span>Cantidad de polos</span>
+          <span id="summaryTotalUnits" style="font-weight: 700; color: #FFFFFF;">0 unidades</span>
+        </div>
+        <div class="pricing-row">
+          <span>Precio unitario</span>
+          <span id="summaryUnitPrice">S/ 35.00</span>
+        </div>
+        <div class="pricing-row">
+          <span>Subtotal</span>
+          <span id="summarySubtotal" style="font-weight: 700; color: #FFFFFF;">S/ 0.00</span>
+        </div>
+        <div class="pricing-row discount-row" id="summaryDiscountRow">
+          <span id="summaryDiscountLabel">Descuento (0%)</span>
+          <span id="summaryDiscountAmount">- S/ 0.00</span>
+        </div>
+        <div class="pricing-row total-row">
+          <span class="total-label">Total a pagar</span>
+          <span class="total-amount" id="summaryFinalTotal">S/ 0.00</span>
+        </div>
+      </div>
+
+      <!-- Botón principal de WhatsApp -->
+      <button type="button" class="btn-whatsapp" id="btnSendWhatsapp">
+        <svg viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+        Enviar pedido por WhatsApp
+      </button>
+
+      <!-- Mensaje de error general si falta algo -->
+      <div class="alert-banner" id="orderErrorAlert" style="margin-top: 14px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="orderErrorText">Completa todos los datos requeridos.</span>
+      </div>
+    </section>
+
+    <footer class="footer-note">
+      Polo Propio &copy; Lima, Perú &bull; Personalización de polos para grupos
+    </footer>
+
+  </div>
+
+  <!-- ============================================================
+       MODAL DE CONFIRMACIÓN AL ENVIAR
+       ============================================================ -->
+  <div class="toast-overlay" id="confirmModal">
+    <div class="toast-modal">
+      <div class="toast-icon">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h3 class="toast-title">¡Pedido listo para enviar!</h3>
+      <p class="toast-desc">Te estamos redirigiendo a WhatsApp con el resumen ordenado de tu grupo para que solo tengas que presionar "Enviar".</p>
+      <button type="button" class="btn-modal-close" id="btnModalClose">Entendido</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT: LÓGICA DE NEGOCIO Y REACTIVIDAD EN TIEMPO REAL
+       ============================================================ -->
+  <script>
+    /* ==========================================================
+       1. CONSTANTES DEL NEGOCIO (Fáciles de editar por el dueño)
+       ========================================================== */
+    const CONFIG = {
+      // Número oficial de WhatsApp de Polo Propio (código de país 51 para Perú)
+      WHATSAPP_NUMBER: "51999999999",
+
+      // Precio base por cada polo en Soles
+      PRECIO_BASE: 35.00,
+
+      // Escalas de descuento por cantidad de polos
+      DESCUENTO_NIVEL_1: { cantidadMinima: 6, porcentaje: 10 },
+      DESCUENTO_NIVEL_2: { cantidadMinima: 12, porcentaje: 15 },
+
+      // Catálogo de 6 colores disponibles con etiquetas y contrastes
+      COLORES: [
+        { id: "negro",   nombre: "Negro",       hex: "#141414", stroke: "#777777", innerStroke: "#555555" },
+        { id: "blanco",  nombre: "Blanco",      hex: "#FAFAFA", stroke: "#222222", innerStroke: "#AAAAAA" },
+        { id: "naranja", nombre: "Naranja",     hex: "#FF6A00", stroke: "#993E00", innerStroke: "#FF9248" },
+        { id: "azul",    nombre: "Azul marino", hex: "#162744", stroke: "#4B6B9B", innerStroke: "#2B406B" },
+        { id: "rojo",    nombre: "Rojo",        hex: "#D3202A", stroke: "#660B10", innerStroke: "#FF666F" },
+        { id: "verde",   nombre: "Verde",       hex: "#1E824C", stroke: "#0C4726", innerStroke: "#42B877" }
+      ]
+    };
+
+    /* ==========================================================
+       2. ESTADO DE LA APLICACIÓN
+       ========================================================== */
+    const appState = {
+      colorSeleccionado: CONFIG.COLORES[0], // Inicia con Negro
+      tallaSeleccionada: "M",               // Inicia con M seleccionada
+      personas: []                          // Lista de { id, nombre, dorsal, talla }
+    };
+
+    /* ==========================================================
+       3. ELEMENTOS DEL DOM
+       ========================================================= */
+    // Sección Organizador & Color
+    const orgNombreInput = document.getElementById("orgNombre");
+    const orgCelularInput = document.getElementById("orgCelular");
+    const colorOptionsContainer = document.getElementById("colorOptionsContainer");
+    const poloPath = document.getElementById("poloPath");
+    const poloSvg = document.getElementById("poloSvg");
+    const poloCollarInner = document.getElementById("poloCollarInner");
+    const poloCollarRib = document.getElementById("poloCollarRib");
+    const poloSleeveL = document.getElementById("poloSleeveL");
+    const poloSleeveR = document.getElementById("poloSleeveR");
+    const poloColorLabel = document.getElementById("poloColorLabel");
+
+    // Sección Personas
+    const personaNombreInput = document.getElementById("personaNombre");
+    const personaNumeroInput = document.getElementById("personaNumero");
+    const sizePillsContainer = document.getElementById("sizePillsContainer");
+    const btnAddPerson = document.getElementById("btnAddPerson");
+    const personErrorAlert = document.getElementById("personErrorAlert");
+    const personErrorText = document.getElementById("personErrorText");
+    const peopleList = document.getElementById("peopleList");
+    const emptyStateMsg = document.getElementById("emptyStateMsg");
+    const peopleCountBadge = document.getElementById("peopleCountBadge");
+
+    // Sección Resumen
+    const countS = document.getElementById("countS");
+    const countM = document.getElementById("countM");
+    const countL = document.getElementById("countL");
+    const countXL = document.getElementById("countXL");
+    const discountIcon = document.getElementById("discountIcon");
+    const discountTitle = document.getElementById("discountTitle");
+    const discountSub = document.getElementById("discountSub");
+    const discountProgressBar = document.getElementById("discountProgressBar");
+    const summaryTotalUnits = document.getElementById("summaryTotalUnits");
+    const summaryUnitPrice = document.getElementById("summaryUnitPrice");
+    const summarySubtotal = document.getElementById("summarySubtotal");
+    const summaryDiscountLabel = document.getElementById("summaryDiscountLabel");
+    const summaryDiscountAmount = document.getElementById("summaryDiscountAmount");
+    const summaryFinalTotal = document.getElementById("summaryFinalTotal");
+
+    // Enviar WhatsApp & Modal
+    const btnSendWhatsapp = document.getElementById("btnSendWhatsapp");
+    const orderErrorAlert = document.getElementById("orderErrorAlert");
+    const orderErrorText = document.getElementById("orderErrorText");
+    const confirmModal = document.getElementById("confirmModal");
+    const btnModalClose = document.getElementById("btnModalClose");
+
+    /* ==========================================================
+       4. INICIALIZACIÓN
+       ========================================================== */
+    function init() {
+      renderColorOptions();
+      actualizarPreviewPolo(appState.colorSeleccionado);
+      setupEvents();
+      actualizarResumen();
+      summaryUnitPrice.textContent = `S/ ${CONFIG.PRECIO_BASE.toFixed(2)}`;
+    }
+
+    /* ==========================================================
+       5. SELECTOR DE COLOR & PREVIEW SVG DINÁMICO
+       ========================================================== */
+    function renderColorOptions() {
+      colorOptionsContainer.innerHTML = "";
+      CONFIG.COLORES.forEach((col) => {
+        const chip = document.createElement("div");
+        chip.className = `color-chip ${col.id === appState.colorSeleccionado.id ? 'active' : ''}`;
+        chip.setAttribute("role", "button");
+        chip.setAttribute("tabindex", "0");
+        chip.innerHTML = `
+          <div class="color-circle" style="background-color: ${col.hex}; ${col.id === 'blanco' ? 'border: 1.5px solid #666;' : ''}"></div>
+          <span class="color-label">${col.nombre}</span>
+        `;
+        chip.addEventListener("click", () => seleccionarColor(col));
+        colorOptionsContainer.appendChild(chip);
+      });
+    }
+
+    function seleccionarColor(col) {
+      appState.colorSeleccionado = col;
+      document.querySelectorAll(".color-chip").forEach((c, index) => {
+        c.classList.toggle("active", CONFIG.COLORES[index].id === col.id);
+      });
+      actualizarPreviewPolo(col);
+    }
+
+    function actualizarPreviewPolo(col) {
+      poloPath.style.fill = col.hex;
+      poloSvg.style.stroke = col.stroke;
+      
+      // Ajuste de contraste para detalles internos
+      poloCollarInner.setAttribute("stroke", col.innerStroke);
+      poloCollarRib.setAttribute("stroke", col.innerStroke);
+      poloSleeveL.setAttribute("stroke", col.innerStroke);
+      poloSleeveR.setAttribute("stroke", col.innerStroke);
+
+      poloColorLabel.textContent = col.nombre;
+    }
+
+    /* ==========================================================
+       6. SELECTOR DE TALLA
+       ========================================================== */
+    function setupSizePills() {
+      const pills = sizePillsContainer.querySelectorAll(".size-pill");
+      pills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          pills.forEach(p => p.classList.remove("active"));
+          pill.classList.add("active");
+          appState.tallaSeleccionada = pill.getAttribute("data-size");
+        });
+      });
+    }
+
+    /* ==========================================================
+       7. GESTIÓN DE PERSONAS (AGREGAR / ELIMINAR / VALIDAR)
+       ========================================================== */
+    function mostrarErrorPersona(mensaje) {
+      personErrorText.textContent = mensaje;
+      personErrorAlert.style.display = "flex";
+      setTimeout(() => {
+        personErrorAlert.style.display = "none";
+      }, 4500);
+    }
+
+    function limpiarErrorPersona() {
+      personErrorAlert.style.display = "none";
+    }
+
+    function agregarPersona() {
+      limpiarErrorPersona();
+      const rawNombre = personaNombreInput.value.trim();
+      const rawNumero = personaNumeroInput.value.trim();
+      const talla = appState.tallaSeleccionada;
+
+      // Validación 1: Nombre obligatorio
+      if (!rawNombre) {
+        mostrarErrorPersona("Por favor, ingresa el nombre que irá en el polo.");
+        personaNombreInput.focus();
+        return;
+      }
+
+      // Validación 2: Talla obligatoria
+      if (!talla) {
+        mostrarErrorPersona("Por favor, selecciona una talla (S, M, L o XL).");
+        return;
+      }
+
+      // Validación 3: Evitar nombres exactamente repetidos (case-insensitive)
+      const nombreNormalizado = rawNombre.toUpperCase();
+      const existeDuplicado = appState.personas.some(
+        p => p.nombre.trim().toUpperCase() === nombreNormalizado
+      );
+
+      if (existeDuplicado) {
+        mostrarErrorPersona(`El nombre "${rawNombre.toUpperCase()}" ya fue agregado. Si son dos personas distintas, añade una inicial o apellido (ej. ${rawNombre.toUpperCase()} M.).`);
+        personaNombreInput.focus();
+        return;
+      }
+
+      // Crear nueva persona
+      const nuevaPersona = {
+        id: Date.now() + Math.random().toString(36).substring(2, 5),
+        nombre: rawNombre.toUpperCase(),
+        dorsal: rawNumero || null,
+        talla: talla
+      };
+
+      appState.personas.push(nuevaPersona);
+
+      // Limpiar campos del formulario
+      personaNombreInput.value = "";
+      personaNumeroInput.value = "";
+      personaNombreInput.focus();
+
+      // Renderizar y recalcular
+      renderListaPersonas();
+      actualizarResumen();
+      ocultarErrorOrden();
+    }
+
+    function eliminarPersona(id) {
+      const itemEl = document.querySelector(`[data-person-id="${id}"]`);
+      if (itemEl) {
+        itemEl.classList.add("removing");
+        setTimeout(() => {
+          appState.personas = appState.personas.filter(p => p.id !== id);
+          renderListaPersonas();
+          actualizarResumen();
+        }, 180);
+      } else {
+        appState.personas = appState.personas.filter(p => p.id !== id);
+        renderListaPersonas();
+        actualizarResumen();
+      }
+    }
+
+    function renderListaPersonas() {
+      const total = appState.personas.length;
+      peopleCountBadge.textContent = `${total} ${total === 1 ? 'persona' : 'personas'}`;
+
+      if (total === 0) {
+        peopleList.innerHTML = `
+          <div class="empty-state" id="emptyStateMsg">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+            <p>Aún no has agregado integrantes.</p>
+            <p style="font-size: 0.78rem; margin-top: 4px; color: var(--text-dim);">Escribe el nombre arriba y presiona "Agregar persona".</p>
+          </div>
+        `;
+        return;
+      }
+
+      peopleList.innerHTML = "";
+      appState.personas.forEach((persona, index) => {
+        const item = document.createElement("div");
+        item.className = "person-item";
+        item.setAttribute("data-person-id", persona.id);
+
+        const dorsalBadge = persona.dorsal ? `<span class="dorsal-tag">#${persona.dorsal}</span>` : "";
+
+        item.innerHTML = `
+          <div class="person-info">
+            <div class="person-num">${index + 1}</div>
+            <div class="person-details">
+              <div class="person-name">${persona.nombre}</div>
+              <div class="person-meta">
+                ${dorsalBadge}
+                <span>Talla ${persona.talla}</span>
+              </div>
+            </div>
+          </div>
+          <div class="person-actions">
+            <span class="talla-badge">${persona.talla}</span>
+            <button type="button" class="btn-delete" title="Eliminar a ${persona.nombre}" aria-label="Eliminar a ${persona.nombre}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </div>
+        `;
+
+        item.querySelector(".btn-delete").addEventListener("click", () => eliminarPersona(persona.id));
+        peopleList.appendChild(item);
+      });
+    }
+
+    /* ==========================================================
+       8. CÁLCULO DE RESUMEN, PRECIOS Y DESCUENTOS EN VIVO
+       ========================================================= */
+    function actualizarResumen() {
+      const cantidad = appState.personas.length;
+
+      // Conteo por tallas
+      const tallasCount = { S: 0, M: 0, L: 0, XL: 0 };
+      appState.personas.forEach(p => {
+        if (tallasCount[p.talla] !== undefined) {
+          tallasCount[p.talla]++;
+        }
+      });
+
+      countS.textContent = tallasCount.S;
+      countM.textContent = tallasCount.M;
+      countL.textContent = tallasCount.L;
+      countXL.textContent = tallasCount.XL;
+
+      // Cálculos monetarios
+      const subtotal = cantidad * CONFIG.PRECIO_BASE;
+      let porcentajeDescuento = 0;
+
+      if (cantidad >= CONFIG.DESCUENTO_NIVEL_2.cantidadMinima) {
+        porcentajeDescuento = CONFIG.DESCUENTO_NIVEL_2.porcentaje;
+      } else if (cantidad >= CONFIG.DESCUENTO_NIVEL_1.cantidadMinima) {
+        porcentajeDescuento = CONFIG.DESCUENTO_NIVEL_1.porcentaje;
+      }
+
+      const montoDescuento = subtotal * (porcentajeDescuento / 100);
+      const totalFinal = subtotal - montoDescuento;
+
+      // Actualizar valores en UI
+      summaryTotalUnits.textContent = `${cantidad} ${cantidad === 1 ? 'polo' : 'polos'}`;
+      summarySubtotal.textContent = `S/ ${subtotal.toFixed(2)}`;
+      summaryDiscountLabel.textContent = `Descuento (${porcentajeDescuento}%)`;
+      summaryDiscountAmount.textContent = `- S/ ${montoDescuento.toFixed(2)}`;
+      summaryFinalTotal.textContent = `S/ ${totalFinal.toFixed(2)}`;
+
+      // Feedback y mensaje motivador
+      actualizarMensajeMotivador(cantidad, porcentajeDescuento);
+    }
+
+    function actualizarMensajeMotivador(cantidad, porcentajeActual) {
+      if (cantidad === 0) {
+        discountIcon.textContent = "🎯";
+        discountTitle.textContent = "¡Desbloquea descuentos por volumen!";
+        discountSub.textContent = `Agrega ${CONFIG.DESCUENTO_NIVEL_1.cantidadMinima} polos o más para obtener 10% y ${CONFIG.DESCUENTO_NIVEL_2.cantidadMinima} para 15% de descuento.`;
+        discountProgressBar.style.width = "0%";
+      } else if (cantidad < CONFIG.DESCUENTO_NIVEL_1.cantidadMinima) {
+        const faltan = CONFIG.DESCUENTO_NIVEL_1.cantidadMinima - cantidad;
+        discountIcon.textContent = "⚡";
+        discountTitle.textContent = `Agrega ${faltan} ${faltan === 1 ? 'polo más' : 'polos más'} y obtienes 10% de descuento`;
+        discountSub.textContent = `Llevas ${cantidad} de ${CONFIG.DESCUENTO_NIVEL_1.cantidadMinima} polos para el primer descuento grupal.`;
+        const pctBar = (cantidad / CONFIG.DESCUENTO_NIVEL_1.cantidadMinima) * 50;
+        discountProgressBar.style.width = `${pctBar}%`;
+      } else if (cantidad < CONFIG.DESCUENTO_NIVEL_2.cantidadMinima) {
+        const faltan = CONFIG.DESCUENTO_NIVEL_2.cantidadMinima - cantidad;
+        discountIcon.textContent = "🎉";
+        discountTitle.textContent = `Agrega ${faltan} ${faltan === 1 ? 'polo más' : 'polos más'} y obtienes 15% de descuento`;
+        discountSub.textContent = `¡Ya tienes 10% de descuento! Gran ahorro para el grupo.`;
+        const avanceNivel2 = (cantidad - CONFIG.DESCUENTO_NIVEL_1.cantidadMinima) / (CONFIG.DESCUENTO_NIVEL_2.cantidadMinima - CONFIG.DESCUENTO_NIVEL_1.cantidadMinima);
+        const pctBar = 50 + (avanceNivel2 * 50);
+        discountProgressBar.style.width = `${pctBar}%`;
+      } else {
+        discountIcon.textContent = "🔥";
+        discountTitle.textContent = "¡Felicidades! Alcanzaste el descuento máximo de 15%.";
+        discountSub.textContent = `Tu grupo disfruta del mejor precio por polo: S/ ${(CONFIG.PRECIO_BASE * 0.85).toFixed(2)} c/u.`;
+        discountProgressBar.style.width = "100%";
+      }
+    }
+
+    /* ==========================================================
+       9. VALIDACIÓN GENERAL Y ENVÍO POR WHATSAPP
+       ========================================================= */
+    function mostrarErrorOrden(mensaje) {
+      orderErrorText.textContent = mensaje;
+      orderErrorAlert.style.display = "flex";
+      orderErrorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        orderErrorAlert.style.display = "none";
+      }, 5000);
+    }
+
+    function ocultarErrorOrden() {
+      orderErrorAlert.style.display = "none";
+    }
+
+    function enviarPedidoWhatsapp() {
+      ocultarErrorOrden();
+      const nombreOrg = orgNombreInput.value.trim();
+      const celularOrg = orgCelularInput.value.trim();
+
+      // Validación de organizador
+      if (!nombreOrg) {
+        mostrarErrorOrden("Por favor, ingresa el nombre del organizador en la Sección 1.");
+        orgNombreInput.focus();
+        return;
+      }
+
+      if (!celularOrg) {
+        mostrarErrorOrden("Por favor, ingresa un número de celular de contacto en la Sección 1.");
+        orgCelularInput.focus();
+        return;
+      }
+
+      // Validación de lista de personas
+      if (appState.personas.length === 0) {
+        mostrarErrorOrden("Debes agregar al menos a 1 persona a la lista de polos.");
+        personaNombreInput.focus();
+        return;
+      }
+
+      // Conteo por tallas
+      const tallasCount = { S: 0, M: 0, L: 0, XL: 0 };
+      appState.personas.forEach(p => {
+        if (tallasCount[p.talla] !== undefined) {
+          tallasCount[p.talla]++;
+        }
+      });
+
+      // Cálculos monetarios finales
+      const cantidad = appState.personas.length;
+      const subtotal = cantidad * CONFIG.PRECIO_BASE;
+      let porcentajeDescuento = 0;
+
+      if (cantidad >= CONFIG.DESCUENTO_NIVEL_2.cantidadMinima) {
+        porcentajeDescuento = CONFIG.DESCUENTO_NIVEL_2.porcentaje;
+      } else if (cantidad >= CONFIG.DESCUENTO_NIVEL_1.cantidadMinima) {
+        porcentajeDescuento = CONFIG.DESCUENTO_NIVEL_1.porcentaje;
+      }
+
+      const montoDescuento = subtotal * (porcentajeDescuento / 100);
+      const totalFinal = subtotal - montoDescuento;
+
+      // Armar la lista numerada de personas: "nombre (numero si lo hay) - talla"
+      const listaPersonasTexto = appState.personas.map((p, index) => {
+        const dorsalStr = p.dorsal ? ` (${p.dorsal})` : "";
+        return `${index + 1}. ${p.nombre}${dorsalStr} - Talla ${p.talla}`;
+      }).join("\n");
+
+      // Construcción del mensaje requerido para WhatsApp
+      const mensaje = 
+`Pedido Polo Propio
+Organizador: ${nombreOrg} - Celular: ${celularOrg}
+Color: ${appState.colorSeleccionado.nombre}
+
+Personas:
+${listaPersonasTexto}
+
+Polos por talla: S ${tallasCount.S}, M ${tallasCount.M}, L ${tallasCount.L}, XL ${tallasCount.XL}
+
+Subtotal: S/ ${subtotal.toFixed(2)}
+Descuento aplicado: ${porcentajeDescuento}% (-S/ ${montoDescuento.toFixed(2)})
+TOTAL: S/ ${totalFinal.toFixed(2)}`;
+
+      // Enlace universal de WhatsApp con codificación adecuada
+      const whatsappUrl = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+
+      // Mostrar mensaje de confirmación
+      confirmModal.style.display = "flex";
+
+      // Abrir enlace wa.me en WhatsApp
+      setTimeout(() => {
+        window.open(whatsappUrl, "_blank");
+      }, 500);
+    }
+
+    /* ==========================================================
+       10. EVENT LISTENERS
+       ========================================================== */
+    function setupEvents() {
+      setupSizePills();
+
+      // Botón agregar persona
+      btnAddPerson.addEventListener("click", agregarPersona);
+
+      // Agregar con Enter en los inputs de persona
+      personaNombreInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          agregarPersona();
+        }
+      });
+
+      personaNumeroInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          agregarPersona();
+        }
+      });
+
+      // Botón principal de WhatsApp
+      btnSendWhatsapp.addEventListener("click", enviarPedidoWhatsapp);
+
+      // Cerrar modal
+      btnModalClose.addEventListener("click", () => {
+        confirmModal.style.display = "none";
+      });
+
+      confirmModal.addEventListener("click", (e) => {
+        if (e.target === confirmModal) {
+          confirmModal.style.display = "none";
+        }
+      });
+    }
+
+    // Arrancar la app al cargar el DOM
+    document.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
